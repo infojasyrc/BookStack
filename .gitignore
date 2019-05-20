@@ -1,3 +1,6 @@
+# IDEs
+/.vscode/
+
 /vendor
 /node_modules
 Homestead.yaml

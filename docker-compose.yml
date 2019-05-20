@@ -1,0 +1,29 @@
+version: '3'
+services:
+  belax-wiki-db:
+    image: mysql:5.7.21
+    environment:
+    - MYSQL_ROOT_PASSWORD=secret
+    - MYSQL_DATABASE=bookstack
+    - MYSQL_USER=bookstack
+    - MYSQL_PASSWORD=secret
+    volumes:
+    - mysql-data:/var/lib/mysql
+  
+  belax-wiki-site:
+    build:
+      context: ./docker_config/
+    ports:
+      - "8080:80"
+    volumes:
+      - ./docker_config/site/:/etc/apache2/sites-enabled/
+      - .:/var/www/html
+      - uploads:/var/www/html/public/uploads
+      - storage-uploads:/var/www/html/public/storage
+    links:
+      - belax-wiki-db
+
+volumes:
+  mysql-data:
+  uploads:
+  storage-uploads:
